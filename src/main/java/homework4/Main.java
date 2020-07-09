@@ -3,6 +3,10 @@ package homework4;
 import java.util.Arrays;
 import java.util.Scanner;
 
+//update 1: исправлена проверка для ходов AI. Теперь он не ставит лишние 0, если там и так уже Х не выиграет (+)
+//update 2: AI ходит не рандомно, а пытается поставить сначала в центре нужного элемента (+)
+//update 3: усовершенствован метод проверки (-)
+
 public class Main {
     public static final int SIZE = 5;
     public static char[][] map = new char[SIZE + 1][SIZE + 1];
@@ -76,7 +80,7 @@ public class Main {
     public static void printMap() {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map.length; j++) {
-                System.out.print(map[i][j] + " ");
+                System.out.print(map[i][j] + "  ");
             }
             System.out.println("");
         }
@@ -101,12 +105,14 @@ public class Main {
         //подсчет максимального количества крестиков в каждой строке
         for (int i = 1; i < map.length; i++) {
             int countHor = 0;
-            for (int j = 1; j < map.length; j++) {
-                if (map[i][j] == DOT_X) {
-                    countHor++;
+            if (checkEmptyX(i)) {
+                for (int j = 1; j < map.length; j++) {
+                    if (map[i][j] == DOT_X) {
+                        countHor++;
+                    }
                 }
             }
-            if (maxIsX < countHor && checkEmptyX(i)) {
+            if (maxIsX < countHor) {
                 maxIsX = countHor;
                 maxLineForX = i;
             }
@@ -115,12 +121,14 @@ public class Main {
         //подсчет максимального количества крестиков в каждом столбце
         for (int i = 1; i < map.length; i++) {
             int countVert = 0;
-            for (int j = 1; j < map.length; j++) {
-                if (map[j][i] == DOT_X) {
-                    countVert++;
+            if (checkEmptyY(i)) {
+                for (int j = 1; j < map.length; j++) {
+                    if (map[j][i] == DOT_X) {
+                        countVert++;
+                    }
                 }
             }
-            if (maxIsY < countVert && checkEmptyY(i)) {
+            if (maxIsY < countVert) {
                 maxIsY = countVert;
                 maxLineForY = i;
             }
@@ -183,12 +191,12 @@ public class Main {
             }
             else if (maxValue == maxIsX) {
                 x = maxLineForX;
-                y = (int) (Math.random() * 5 + 1);
+                y = checkAITurn(x, 0, 0, 0);
             } else if (maxValue == maxIsY) {
-                x = (int) (Math.random() * 5 + 1);
                 y = maxLineForY;
+                x = checkAITurn(0, y, 0, 0);
             } else if (countDiag1 == maxValue) {
-                x = (int) (Math.random() * 5 + 1);
+                x = checkAITurn(0, 0, 1, 0);
                 y = x;
             } else if (countDiag2 == maxValue) {
                 y = (int) (Math.random() * 4 + 1);
@@ -197,7 +205,7 @@ public class Main {
                 x = (int) (Math.random() * 4 + 1);
                 y = x + 1;
             } else if (countDiag4 == maxValue) {
-                x = (int) (Math.random() * 5 + 1);
+                x = checkAITurn(0, 0, 0, 1);
                 y = map.length - x;
             } else if (countDiag5 == maxValue) {
                 x = (int) (Math.random() * 4 + 1);
@@ -213,10 +221,42 @@ public class Main {
         map[x][y] = DOT_0;
     }
 
+    //проверка для попытки походить с центра элемента
+    public static int checkAITurn (int hor, int vert, int diag1, int diag4) {
+        int[] check = { 1, 5, 2, 4, 3};
+        int num = 1;
+        if (hor != 0) {
+            for (int i = 0; i < check.length; i++) {
+                if (map[hor][check[i]] == DOT_EMPTY)
+                    num = check[i];
+            }
+        } else if (vert != 0) {
+            for (int i = 0; i < check.length; i++) {
+                if (map[check[i]][vert] == DOT_EMPTY)
+                    num = check[i];
+            }
+        } else if (diag1 != 0) {
+            for (int i = 0; i < check.length; i++) {
+                if (map[check[i]][check[i]] == DOT_EMPTY)
+                    num = check[i];
+            }
+        } else if (diag4 != 0) {
+            for (int i = 0; i < check.length; i++) {
+                if (map[check[i]][check.length-check[i]+1] == DOT_EMPTY)
+                    num = check[i];
+            }
+        }
+        return num;
+    }
+
 
     //проверка наличия свободного места в строке/столбце/диагонали для хода AI
     //следующие 8 методов - проверка
     public static boolean checkEmptyX(int x) {
+        for (int i = 2; i < map.length-1; i++) {
+            if (map[x][i] == DOT_0)
+                return false;
+        }
         for (int i = 1; i < map.length; i++) {
             if (map[x][i] == DOT_EMPTY)
                 return true;
@@ -225,6 +265,10 @@ public class Main {
     }
 
     public static boolean checkEmptyY(int y) {
+        for (int i = 2; i < map.length-1; i++) {
+            if (map[i][y] == DOT_0)
+                return false;
+        }
         for (int i = 1; i < map.length; i++) {
             if (map[i][y] == DOT_EMPTY)
                 return true;
@@ -233,6 +277,11 @@ public class Main {
     }
 
     public static boolean checkEmptyDiag1() {
+        for (int i = 2; i < map.length-1; i++) {
+            if (map[i][i] == DOT_0) {
+                return false;
+            }
+        }
         for (int i = 1; i < map.length; i++) {
             if (map[i][i] == DOT_EMPTY) {
                 return true;
@@ -243,6 +292,11 @@ public class Main {
 
     public static boolean checkEmptyDiag2() {
         for (int i = 1; i < map.length-1; i++) {
+            if (map[i + 1][i] == DOT_0) {
+                return false;
+            }
+        }
+        for (int i = 1; i < map.length-1; i++) {
             if (map[i+1][i] == DOT_EMPTY) {
                 return true;
             }
@@ -252,6 +306,11 @@ public class Main {
 
     public static boolean checkEmptyDiag3() {
         for (int i = 1; i < map.length-1; i++) {
+            if (map[i][i + 1] == DOT_0) {
+                return false;
+            }
+        }
+        for (int i = 1; i < map.length-1; i++) {
             if (map[i][i+1] == DOT_EMPTY) {
                 return true;
             }
@@ -260,6 +319,11 @@ public class Main {
     }
 
     public static boolean checkEmptyDiag4() {
+        for (int i = 2; i < map.length-1; i++) {
+            if (map[i][map.length - i] == DOT_0) {
+                return false;
+            }
+        }
         for (int i = 1; i < map.length; i++) {
             if (map[i][map.length-i] == DOT_EMPTY) {
                 return true;
@@ -270,6 +334,11 @@ public class Main {
 
     public static boolean checkEmptyDiag5() {
         for (int i = 1; i < map.length-1; i++) {
+            if (map[i][map.length - i - 1] == DOT_0) {
+                return false;
+            }
+        }
+        for (int i = 1; i < map.length-1; i++) {
             if (map[i][map.length-i-1] == DOT_EMPTY) {
                 return true;
             }
@@ -278,6 +347,11 @@ public class Main {
     }
 
     public static boolean checkEmptyDiag6() {
+        for (int i = 1; i < map.length-1; i++) {
+            if (map[i + 1][map.length - i] == DOT_0) {
+                return false;
+            }
+        }
         for (int i = 1; i < map.length-1; i++) {
             if (map[i+1][map.length-i] == DOT_EMPTY) {
                 return true;
