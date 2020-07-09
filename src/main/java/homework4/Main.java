@@ -6,6 +6,8 @@ import java.util.Scanner;
 //update 1: исправлена проверка для ходов AI. Теперь он не ставит лишние 0, если там и так уже Х не выиграет (+)
 //update 2: AI ходит не рандомно, а пытается поставить сначала в центре нужного элемента (+)
 //update 3: усовершенствован метод проверки (-)
+//update 4: первый ход AI делаем 3-3 (+)
+//update 5: при неправильных координатах, выводим текст на экран (+)
 
 public class Main {
     public static final int SIZE = 5;
@@ -23,7 +25,7 @@ public class Main {
     public static void playGame() {
         createMap();
         if (firstMove()) {
-            aiTurn();
+            map[3][3] = DOT_0;
         }
         printMap();
         while (true) {
@@ -89,12 +91,19 @@ public class Main {
     public static void myTurn() {
         int x, y;
         do {
-            System.out.println("Введите координаты:");
-            x = sc.nextInt();
-            y = sc.nextInt();
-        } while (!(map[x][y] == DOT_EMPTY)); //решил не создавать метод проверки
+            do {
+                System.out.println("Введите координаты:");
+                x = sc.nextInt();
+                y = sc.nextInt();
+                if ((x < 1) || (x > 5) || (y < 1) || (y > 5))
+                    System.out.println("Неверно введены координаты. Используйте координаты от 1 до 5.");
+            } while ((x < 1) || (x > 5) || (y < 1) || (y > 5)); //решил не создавать метод проверки
+            if (!(map[x][y] == DOT_EMPTY))
+                System.out.println("Точка с координатами " + x + " " + y + " уже занята");
+        } while (!(map[x][y] == DOT_EMPTY));
         map[x][y] = DOT_X;
     }
+
 
     public static void aiTurn() {
         System.out.println("Ход компьютера:");
