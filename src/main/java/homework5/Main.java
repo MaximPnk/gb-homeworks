@@ -11,6 +11,21 @@ public class Main {
         employArray[3] = new Employee("Фиников Ф.Ф.", "Стажер", "newbie@corp.ru", "8-800-123-45-67", 30000, 21);
         employArray[4] = new Employee("Харазян Х.Х.", "Водитель", "drive@corp.ru", "8-800-123-45-67 (доб. 3)", 100000, 37);
 
+        employArray[0].showInfo();
+        employArray[1].showInfo();
+        employArray[2].showInfo();
+        employArray[3].showInfo();
+        employArray[4].showInfo();
+        System.out.println("");
+
+
+        for (int i = 0; i < employArray.length; i++) {
+            if (employArray[i].age >= 40) {
+                employArray[i].showInfo();
+            }
+        }
+
+        //      Для статик метода с вызовом при помощи параметра
         /*
         Employee.showInfo(employArray[0]);
         Employee.showInfo(employArray[1]);
@@ -19,10 +34,10 @@ public class Main {
         Employee.showInfo(employArray[4]);
         */
 
-        for (int i = 0; i < employArray.length; i++) {
+        /*for (int i = 0; i < employArray.length; i++) {
             if (employArray[i].age >= 40) {
                 Employee.showInfo(employArray[i]);
             }
-        }
+        }*/
     }
 }
