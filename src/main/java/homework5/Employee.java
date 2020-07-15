@@ -17,16 +17,19 @@ public class Employee {
         this.age = age;
     }
 
-    /*public static void showInfo(Employee person) {
+    /*public static void showInfoStat(Employee person) {
         System.out.println("Имя: " + person.name + ". Должность: " + person.position +
                 ". E-mail: " + person.email + ". Телефон: " + person.phone + ". З/п: " + person.salary +
                 ". Возраст: " + person.age + ".");
     }*/
 
-    public void showInfo() {
+    public void showInfoNonStat() {
         System.out.println("Имя: " + name + ". Должность: " + position +
                 ". E-mail: " + email + ". Телефон: " + phone + ". З/п: " + salary +
                 ". Возраст: " + age + ".");
     }
+
+
+
 
 }

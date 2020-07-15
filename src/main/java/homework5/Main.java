@@ -11,33 +11,33 @@ public class Main {
         employArray[3] = new Employee("Фиников Ф.Ф.", "Стажер", "newbie@corp.ru", "8-800-123-45-67", 30000, 21);
         employArray[4] = new Employee("Харазян Х.Х.", "Водитель", "drive@corp.ru", "8-800-123-45-67 (доб. 3)", 100000, 37);
 
-        employArray[0].showInfo();
-        employArray[1].showInfo();
-        employArray[2].showInfo();
-        employArray[3].showInfo();
-        employArray[4].showInfo();
+        employArray[0].showInfoNonStat();
+        employArray[1].showInfoNonStat();
+        employArray[2].showInfoNonStat();
+        employArray[3].showInfoNonStat();
+        employArray[4].showInfoNonStat();
         System.out.println("");
 
 
         for (int i = 0; i < employArray.length; i++) {
             if (employArray[i].age >= 40) {
-                employArray[i].showInfo();
+                employArray[i].showInfoNonStat();
             }
         }
 
-        //      Для статик метода с вызовом при помощи параметра
-        /*
-        Employee.showInfo(employArray[0]);
-        Employee.showInfo(employArray[1]);
-        Employee.showInfo(employArray[2]);
-        Employee.showInfo(employArray[3]);
-        Employee.showInfo(employArray[4]);
-        */
+      /*  //      Для статик метода с вызовом при помощи параметра
+        Employee.showInfoStat(employArray[0]);
+        Employee.showInfoStat(employArray[1]);
+        Employee.showInfoStat(employArray[2]);
+        Employee.showInfoStat(employArray[3]);
+        Employee.showInfoStat(employArray[4]);
 
-        /*for (int i = 0; i < employArray.length; i++) {
+        for (int i = 0; i < employArray.length; i++) {
             if (employArray[i].age >= 40) {
-                Employee.showInfo(employArray[i]);
+                Employee.showInfoStat(employArray[i]);
             }
-        }*/
+        }
+
+        Math.random();*/
     }
 }
