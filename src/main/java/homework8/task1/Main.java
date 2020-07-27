@@ -4,17 +4,25 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = new int[99999];
+        int[] arr = new int[10000];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = (int) (Math.random()*100-50);
         }
-        Arrays.sort(arr);
-        System.out.printf("Минимальное значение = %d\n", arr[0]);
-        if (arr.length % 2 == 1) {
-            System.out.printf("Среднее значение = %d\n", arr[arr.length/2+1]);
-        } else {
-            System.out.printf("Средние значения = %d и %d\n", arr[arr.length/2], arr[arr.length/2+1]);
+        int min = arr[0];
+        int max = arr[0];
+        double mid = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+            mid += arr[i];
         }
-        System.out.printf("Максимальное значение = %d", arr[arr.length-1]);
+        mid /= 1.0*arr.length;
+        System.out.println("Minimum = " + min);
+        System.out.printf("Average = %.2f\n", mid);
+        System.out.println("Maximum = " + max);
     }
 }
