@@ -20,9 +20,11 @@ public class Main {
         System.out.println(appleBox1.compare(appleBox));
         appleBox1.add(new Apple());
         System.out.println(appleBox.compare(appleBox1));
+        System.out.println(appleBox.compare(orangeBox));
 
         appleBox.pour(appleBox1);
         System.out.println(appleBox.getWeight());
         System.out.println(appleBox1.getWeight());
+
     }
 }

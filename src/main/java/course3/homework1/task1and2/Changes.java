@@ -5,14 +5,17 @@ import java.util.Arrays;
 
 public class Changes {
 
-    public <T> T[] changePositions (T[] array, int from, int to) {
+    public <T> void changePositions (T[] array, int from, int to) {
         T tmp = array[from];
         array[from] = array[to];
         array[to] = tmp;
-        return array;
     }
 
     public <T> ArrayList<T> listFromArray (T[] array) {
-        return new ArrayList<>(Arrays.asList(array));
+        ArrayList<T> list = new ArrayList<>();
+        for (int i = 0; i < array.length; i++) {
+            list.add(array[i]);
+        }
+        return list;
     }
 }

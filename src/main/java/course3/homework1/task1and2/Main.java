@@ -16,14 +16,14 @@ public class Main {
         Arrays.fill(a, 10);
         a[3] = 5;
         System.out.println(Arrays.toString(a));
-        a = new Changes().changePositions(a, 3, 9);
+        new Changes().changePositions(a, 3, 9);
         System.out.println(Arrays.toString(a));
 
         String[] b = new String[5];
         Arrays.fill(b, "asd");
         b[0] = "dsa";
         System.out.println(Arrays.toString(b));
-        b = new Changes().changePositions(b, 0, 2);
+        new Changes().changePositions(b, 0, 2);
         System.out.println(Arrays.toString(b));
     }
 
