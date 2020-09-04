@@ -10,14 +10,9 @@ public class Box<E extends Fruit> {
     }
 
     public Float getWeight() {
+        //TODO такие проверки делаются в классе фрукта
         if (list != null && list.size() != 0) {
-            if (list.get(0) instanceof Apple) {
-                return 1.0f*list.size();
-            } else if (list.get(0) instanceof Orange) {
-                return 1.5f*list.size();
-            } else {
-                return 0f;
-            }
+            return list.get(0).getWeight()*list.size();
         } else {
             return 0f;
         }
