@@ -10,7 +10,6 @@ public class Box<E extends Fruit> {
     }
 
     public Float getWeight() {
-        //TODO такие проверки делаются в классе фрукта
         if (list != null && list.size() != 0) {
             return list.get(0).getWeight()*list.size();
         } else {
