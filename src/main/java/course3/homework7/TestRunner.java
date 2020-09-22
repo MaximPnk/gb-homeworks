@@ -64,7 +64,7 @@ public class TestRunner {
 
         for (int i = 10; i >= 0; i--) {
             for (Method test : tests) {
-                if (test.getAnnotation(TestPriority.class).priority() == i) {
+                if (test.getAnnotation(Test.class).priority() == i) {
                     test.invoke(className);
                 }
             }
